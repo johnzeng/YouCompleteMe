@@ -40,8 +40,12 @@ class CompletionRequest( BaseRequest ):
 
 
   def Start( self ):
+    self.request_data['file_encoding'] = self._GetCurrentEncoding()
     self._response_future = self.PostDataToHandlerAsync( self.request_data,
                                                          'completions' )
+
+  def _GetCurrentEncoding(self):
+    return vimsupport.VimExpressionToPythonType( "&fileencoding" )
 
 
   def Done( self ):
